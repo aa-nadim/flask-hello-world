@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    triggers {
-        githubPush()
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -12,10 +8,23 @@ pipeline {
             }
         }
 
-        stage('Build and Run with Docker Compose') {
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker-compose build'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                sh 'echo "Running tests..."'
+                // Add your test commands here (e.g., pytest)
+            }
+        }
+
+        stage('Deploy Flask App') {
             steps {
                 sh 'docker-compose down'  // Stop and remove existing containers
-                sh 'docker-compose up --build -d'  // Rebuild and start containers in detached mode
+                sh 'docker-compose up -d'  // Start the Flask app in detached mode
             }
         }
     }
