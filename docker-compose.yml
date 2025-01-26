@@ -1,3 +1,4 @@
+version: '3.8'
 
 services:
   flask-app:
@@ -11,7 +12,7 @@ services:
     depends_on:
       - flask-app
     environment:
-      NGROK_AUTHTOKEN: your-ngrok-authtoken  # Replace with your ngrok authtoken
+      NGROK_AUTHTOKEN: 2sApM2I8PFl8UNLWbTfFp6rLgNx_49YaJo8KgpJk2d91sfR7v  # Replace with your actual ngrok authtoken
     ports:
       - "4040:4040"  # Ngrok web interface
     command: http flask-app:5000  # Forward traffic to the Flask app
