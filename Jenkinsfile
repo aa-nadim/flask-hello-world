@@ -8,23 +8,10 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Build and Run with Docker Compose') {
             steps {
-                sh 'pip install -r requirements.txt'
-            }
-        }
-
-        stage('Stop Existing Flask App') {
-            steps {
-                sh '''
-                pkill -f "python app.py" || true
-                '''
-            }
-        }
-
-        stage('Run Flask App') {
-            steps {
-                sh 'nohup python app.py > flask.log 2>&1 &'
+                sh 'docker-compose down' // Stop and remove existing containers
+                sh 'docker-compose up --build -d' // Build and start containers in detached mode
             }
         }
     }
